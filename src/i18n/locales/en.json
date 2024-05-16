@@ -1,0 +1,12 @@
+{
+  "calendar": {
+      "header": {
+          "customContent": "Custom header content",
+          "today": "Today",
+          "prevYear": "Previous Year",
+          "prevMonth": "Previous Month",
+          "nextMonth": "Next Month",
+          "nextYear": "Next Year"
+      }
+  }
+}

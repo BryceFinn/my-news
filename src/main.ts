@@ -16,6 +16,9 @@ import 'element-plus/theme-chalk/dark/css-vars.css'
 import 'vxe-table/lib/style.css'
 import 'vxe-table-plugin-element/dist/style.css'
 import '@/styles/index.scss'
+import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import i18n from './i18n'
 
 const app = createApp(App)
 
@@ -27,6 +30,10 @@ loadSvg(app)
 loadDirectives(app)
 
 app.use(store).use(router)
+app.use(ElementPlus, {
+  locale: zhCn
+})
+app.use(i18n)
 router.isReady().then(() => {
   app.mount('#app')
 })

@@ -1,0 +1,12 @@
+{
+  "calendar": {
+    "header": {
+      "customContent": "文件指示器",
+      "today": "今日",
+      "prevYear": "上一年",
+      "prevMonth": "上个月",
+      "nextMonth": "下个月",
+      "nextYear": "下一年"
+    }
+  }
+}
