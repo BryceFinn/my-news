@@ -22,7 +22,7 @@ const loading = ref(false)
 const codeUrl = ref('')
 /** 登录表单数据 */
 const loginFormData: LoginRequestData = reactive({
-  username: '',
+  username: 'admin',
   password: '',
   code: ''
 })
@@ -30,7 +30,7 @@ const loginFormData: LoginRequestData = reactive({
 const loginFormRules: FormRules = {
   username: [
     { required: true, message: '请输入邮箱', trigger: 'blur' },
-    { type: 'email', message: '邮箱格式错误', trigger: 'blur' }
+    { type: 'string', message: '邮箱格式错误', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },

@@ -1,9 +1,12 @@
 <script lang="ts" setup>
-const VITE_APP_TITLE = import.meta.env.VITE_APP_TITLE
+const VITE_APP_TITLE = import.meta.env.VITE_APP_TITLE ?? '睁眼看世界'
+import { ref } from 'vue'
+const currentYearRef = ref(0)
+currentYearRef.value = new Date().getFullYear()
 </script>
 
 <template>
-  <footer class="layout-footer">MIT © 2021-PRESENT {{ VITE_APP_TITLE }}</footer>
+  <footer class="layout-footer">Copyright © {{ currentYearRef }} {{ VITE_APP_TITLE }}</footer>
 </template>
 
 <style lang="scss" scoped>

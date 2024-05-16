@@ -8,7 +8,7 @@ export interface LoginRequestData {
    * 用户邮箱，应进行前端和后端的格式校验。
    * 格式校验正则表达式：/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
    */
-  username: string
+  username: 'admin' | 'editor'
 
   /**
    * 用户密码，客户端应先对密码进行哈希处理，服务端再进行验证。
