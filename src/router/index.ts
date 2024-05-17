@@ -139,6 +139,14 @@ export const constantRoutes: RouteRecordRaw[] = [
         meta: {
           title: '金融时报'
         }
+      },
+      {
+        path: 'other',
+        component: () => import('@/views/newspaper/other/index.vue'),
+        name: 'Other',
+        meta: {
+          title: '其他...'
+        }
       }
     ]
   },
@@ -173,6 +181,14 @@ export const constantRoutes: RouteRecordRaw[] = [
         name: 'Bloomberg',
         meta: {
           title: '彭博商业周刊'
+        }
+      },
+      {
+        path: 'other',
+        component: () => import('@/views/magazine/other/index.vue'),
+        name: 'Other',
+        meta: {
+          title: '其他...'
         }
       }
     ]
