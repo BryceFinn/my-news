@@ -35,7 +35,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       /** 接口代理 */
       proxy: {
         '/api/v1': {
-          target: 'http://127.0.0.1:8888/api/v1',
+          target: 'http://127.0.0.1:8888',
           ws: true,
           /** 是否允许跨域 */
           changeOrigin: true

@@ -20,7 +20,7 @@ export interface LoginRequestData {
    * 验证码，用于验证用户身份。
    * 注意：验证码应通过安全的方式传输，且服务端应校验验证码的有效性、过期时间等。
    */
-  code: string
+  captcha: string
 }
 
 export type LoginCodeResponseData = ApiResponseData<string>

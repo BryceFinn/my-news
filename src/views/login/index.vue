@@ -15,11 +15,10 @@ const { isFocus, handleBlur, handleFocus } = useFocus()
 
 /** 登录表单元素的引用 */
 const loginFormRef = ref<FormInstance | null>(null)
-
 /** 登录按钮 Loading */
 const loading = ref(false)
 /** 验证码图片 URL */
-const codeUrl = ref('')
+const captchaSrc = ref('')
 /** 登录表单数据 */
 const loginFormData: LoginRequestData = reactive({
   username: 'admin',
@@ -63,11 +62,14 @@ const handleLogin = () => {
 /** 创建验证码 */
 const createCode = () => {
   // 先清空验证码的输入
-  loginFormData.code = ''
+  loginFormData.captcha = ''
   // 获取验证码
-  codeUrl.value = ''
+  captchaSrc.value = ''
   getLoginCodeApi().then((res) => {
-    codeUrl.value = res.data
+    console.log(res.code)
+    console.log(res.data)
+    console.log(res.message)
+    captchaSrc.value = res.data
   })
 }
 
@@ -108,9 +110,9 @@ createCode()
               @focus="handleFocus"
             />
           </el-form-item>
-          <el-form-item prop="code">
+          <el-form-item prop="captcha">
             <el-input
-              v-model.trim="loginFormData.code"
+              v-model.trim="loginFormData.captcha"
               placeholder="验证码"
               type="text"
               tabindex="3"
@@ -119,7 +121,7 @@ createCode()
               size="large"
             >
               <template #append>
-                <el-image :src="codeUrl" @click="createCode" draggable="false">
+                <el-image :src="captchaSrc" @click="createCode" draggable="false">
                   <template #placeholder>
                     <el-icon>
                       <Picture />
