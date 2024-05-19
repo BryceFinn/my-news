@@ -21,7 +21,7 @@ const loading = ref(false)
 const captchaSrc = ref('')
 /** 登录表单数据 */
 const loginFormData: LoginRequestData = reactive({
-  username: 'admin',
+  username: '',
   password: '',
   captcha: ''
 })
@@ -66,9 +66,6 @@ const createCode = () => {
   // 获取验证码
   captchaSrc.value = ''
   getLoginCodeApi().then((res) => {
-    console.log(res.code)
-    console.log(res.data)
-    console.log(res.message)
     captchaSrc.value = res.data
   })
 }

@@ -1,3 +1,5 @@
+import { UserData } from './user'
+
 /**
  * LoginRequestData 接口定义了登录请求需要的数据结构。
  * 注意：在实际应用中，为了保证数据安全，密码应该在客户端先进行哈希处理，
@@ -8,7 +10,7 @@ export interface LoginRequestData {
    * 用户邮箱，应进行前端和后端的格式校验。
    * 格式校验正则表达式：/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
    */
-  username: 'admin' | 'editor'
+  username: string
 
   /**
    * 用户密码，客户端应先对密码进行哈希处理，服务端再进行验证。
@@ -25,6 +27,6 @@ export interface LoginRequestData {
 
 export type LoginCodeResponseData = ApiResponseData<string>
 
-export type LoginResponseData = ApiResponseData<{ token: string }>
+export type LoginResponseData = ApiResponseData<UserData>
 
-export type UserInfoResponseData = ApiResponseData<{ username: string; roles: string[] }>
+export type UserInfoResponseData = ApiResponseData<UserData>

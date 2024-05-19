@@ -18,9 +18,9 @@ export const useUserStore = defineStore('user', () => {
   const settingsStore = useSettingsStore()
 
   /** 登录 */
-  const login = async ({ username, password, code }: LoginRequestData) => {
-    const { data } = await loginApi({ username, password, code })
-    setToken(data.token)
+  const login = async ({ username, password, captcha }: LoginRequestData) => {
+    const { data } = await loginApi({ username, password, captcha })
+    setToken(data)
     token.value = data.token
   }
   /** 获取用户详情 */
