@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useUserStore } from '@/store/modules/user'
-import { type FormInstance, type FormRules } from 'element-plus'
-import { User, Lock, Key, Picture, Loading } from '@element-plus/icons-vue'
 import { getLoginCodeApi } from '@/api/login'
 import { type LoginRequestData } from '@/api/login/types/login'
 import ThemeSwitch from '@/components/ThemeSwitch/index.vue'
+import { useUserStore } from '@/store/modules/user'
+import { Key, Loading, Lock, Picture, User } from '@element-plus/icons-vue'
+import { type FormInstance, type FormRules } from 'element-plus'
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import Owl from './components/Owl.vue'
 import { useFocus } from './hooks/useFocus'
 
@@ -39,22 +39,29 @@ const loginFormRules: FormRules = {
 }
 /** 登录逻辑 */
 const handleLogin = () => {
+  // 校验表单数据是否通过验证
   loginFormRef.value?.validate((valid: boolean, fields) => {
     if (valid) {
+      // 设置按钮 Loading 为 true
       loading.value = true
+      // 使用用户 STORE 中的 login 方法登陆
       useUserStore()
         .login(loginFormData)
         .then(() => {
+          // 登陆成功，跳转到首页
           router.push({ path: '/' })
         })
         .catch(() => {
+          // 登陆失败，重新生成验证码并清空密码
           createCode()
           loginFormData.password = ''
         })
         .finally(() => {
+          // 设置按钮 Loading 为 false
           loading.value = false
         })
     } else {
+      // 校验失败，打印错误信息
       console.error('表单校验不通过', fields)
     }
   })

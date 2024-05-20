@@ -21,10 +21,10 @@ export const getCookie = (key: string) => {
  * Sets a cookie with the given key and value.
  *
  * @param {string} key The key of the cookie.
- * @param {string} value The value of the cookie.
+ * @param {any} value The value of the cookie.
  */
-export const setCookie = (key: string, value: string): void => {
-  Cookies.set(key, value)
+export const setCookie = <T>(key: string, value: T): void => {
+  Cookies.set(key, JSON.stringify(value))
 }
 
 /**
