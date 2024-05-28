@@ -1,6 +1,6 @@
-import { type RouteRecordRaw, createRouter } from 'vue-router'
-import { history, flatMultiLevelRoutes } from './helper'
 import routeSettings from '@/config/route'
+import { createRouter, type RouteRecordRaw } from 'vue-router'
+import { flatMultiLevelRoutes, history } from './helper'
 
 const Layouts = () => import('@/layouts/index.vue')
 
@@ -40,6 +40,13 @@ export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
+    meta: {
+      hidden: true
+    }
+  },
+  {
+    path: '/register',
+    component: () => import('@/views/register/index.vue'),
     meta: {
       hidden: true
     }

@@ -146,11 +146,72 @@ createCode()
               </template>
             </el-input>
           </el-form-item>
-          <el-button :loading="loading" type="primary" size="large" @click.prevent="handleRegister">注 册</el-button>
+          <div class="button-container">
+            <el-button :loading="loading" type="danger" size="default">注 册</el-button>
+            <el-button :loading="loading" type="primary" size="default">登 录</el-button>
+          </div>
         </el-form>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.register-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100%;
+  .theme-switch {
+    position: fixed;
+    top: 5%;
+    right: 5%;
+    cursor: pointer;
+  }
+  .register-card {
+    width: 480px;
+    max-width: 90%;
+    border-radius: 20px;
+    box-shadow: 0 0 10px #dcdfe6;
+    background-color: var(--el-bg-color);
+    overflow: hidden;
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150px;
+      img {
+        height: 100%;
+      }
+    }
+    .content {
+      padding: 20px 50px 50px 50px;
+      :deep(.el-input-group__append) {
+        padding: 0;
+        overflow: hidden;
+        .el-image {
+          width: 100px;
+          height: 40px;
+          border-left: 0px;
+          user-select: none;
+          cursor: pointer;
+          text-align: center;
+        }
+      }
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* 垂直居中对齐 */
+        width: 100%; /* 容器宽度为100% */
+        margin-top: 10px; /* 容器顶部边距 */
+        .el-button {
+          width: 50%;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+</style>

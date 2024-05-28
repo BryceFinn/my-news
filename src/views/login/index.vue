@@ -37,6 +37,10 @@ const loginFormRules: FormRules = {
   ],
   captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
 }
+
+function goToRegister() {
+  router.push({ path: '/register' })
+}
 /** 登录逻辑 */
 const handleLogin = () => {
   // 校验表单数据是否通过验证
@@ -140,7 +144,10 @@ createCode()
               </template>
             </el-input>
           </el-form-item>
-          <el-button :loading="loading" type="primary" size="large" @click.prevent="handleLogin">登 录</el-button>
+          <div class="button-container">
+            <el-button :loading="loading" type="primary" size="default" @click.prevent="handleLogin">登 录</el-button>
+            <el-button :loading="loading" type="danger" size="default" @click="goToRegister">注 册</el-button>
+          </div>
         </el-form>
       </div>
     </div>
@@ -191,9 +198,16 @@ createCode()
           text-align: center;
         }
       }
-      .el-button {
-        width: 100%;
-        margin-top: 10px;
+      .button-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; /* 垂直居中对齐 */
+        width: 100%; /* 容器宽度为100% */
+        margin-top: 10px; /* 容器顶部边距 */
+        .el-button {
+          width: 50%;
+          margin-top: 10px;
+        }
       }
     }
   }
