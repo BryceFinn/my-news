@@ -53,7 +53,7 @@ const handleLogin = () => {
         .login(loginFormData)
         .then(() => {
           // 登陆成功，跳转到首页
-          router.push({ path: '/' })
+          router.push({ path: '/dashboard' })
         })
         .catch(() => {
           // 登陆失败，重新生成验证码并清空密码

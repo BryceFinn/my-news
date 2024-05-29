@@ -21,7 +21,7 @@ declare module 'vue-router' {
     /**
      * 设置能进入该路由的角色，支持多个角色叠加
      */
-    roles?: string[]
+    vipLevel?: number
     /**
      * 默认 true，如果设置为 false，则不会在面包屑中显示
      */

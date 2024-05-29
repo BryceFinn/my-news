@@ -46,6 +46,7 @@ export interface UserLoginData {
    * 是否处于活跃状态
    */
   is_active: boolean
+  is_superuser: boolean
 
   token: string
 }

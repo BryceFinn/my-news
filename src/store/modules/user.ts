@@ -4,12 +4,19 @@ import { registerApi } from '@/api/register'
 import { RegisterRequestData } from '@/api/register/types/register'
 import { resetRouter } from '@/router'
 import store from '@/store'
-import { removeCookie, removeToken, setCookie, setToken } from '@/utils/cache/cookies'
+import { getToken, removeCookie, removeToken, setCookie, setToken } from '@/utils/cache/cookies'
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 import { useSettingsStore } from './settings'
 import { useTagsViewStore } from './tags-view'
 
 export const useUserStore = defineStore('user', () => {
+  const token = ref<string>(getToken() || '')
+  const isActive = ref<boolean>(false)
+  const vipLevel = ref<number>(0)
+  const userNmae = ref<string>('')
+  const isSuperuser = ref<boolean>(false)
+
   const tagsViewStore = useTagsViewStore()
   const settingsStore = useSettingsStore()
 
@@ -17,6 +24,11 @@ export const useUserStore = defineStore('user', () => {
   const login = async ({ username, password, captcha }: LoginRequestData) => {
     const { data } = await loginApi({ username, password, captcha })
     setCookie('userInfo', data)
+    token.value = data.token
+    isActive.value = data.is_active
+    vipLevel.value = data.vip_level
+    userNmae.value = data.username
+    isSuperuser.value = data.is_superuser
     setToken(data.token)
   }
 
@@ -35,6 +47,9 @@ export const useUserStore = defineStore('user', () => {
   /** 重置 Token */
   const resetToken = () => {
     removeToken()
+    token.value = ''
+    isActive.value = false
+    vipLevel.value = 0
   }
   /** 重置 Visited Views 和 Cached Views */
   const _resetTagsView = () => {
@@ -44,7 +59,7 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  return { register, login, logout, resetToken }
+  return { register, login, logout, resetToken, token, isActive, vipLevel, userNmae, isSuperuser }
 })
 
 /** 在 setup 外使用 */

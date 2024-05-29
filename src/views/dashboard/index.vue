@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import { useUserStore } from '@/store/modules/user'
 import Admin from './components/Admin.vue'
-import Editor from './components/Editor.vue'
+import NormalUser from './components/NormalUser.vue'
 
 const userStore = useUserStore()
-const isAdmin = userStore.roles.includes('admin')
+const isSuperuser = userStore.isSuperuser
 </script>
 
 <template>
-  <component :is="isAdmin ? Admin : Editor" />
+  <component :is="isSuperuser ? Admin : NormalUser" />
 </template>
