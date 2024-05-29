@@ -1,4 +1,4 @@
-import { UserData } from './user'
+import { UserData, UserLoginData } from './user'
 
 /**
  * LoginRequestData 接口定义了登录请求需要的数据结构。
@@ -27,6 +27,6 @@ export interface LoginRequestData {
 
 export type LoginCodeResponseData = ApiResponseData<string>
 
-export type LoginResponseData = ApiResponseData<UserData>
+export type LoginResponseData = ApiResponseData<UserLoginData>
 
 export type UserInfoResponseData = ApiResponseData<UserData>

@@ -4,7 +4,7 @@ import { registerApi } from '@/api/register'
 import { RegisterRequestData } from '@/api/register/types/register'
 import { resetRouter } from '@/router'
 import store from '@/store'
-import { removeCookie, removeToken, setCookie } from '@/utils/cache/cookies'
+import { removeCookie, removeToken, setCookie, setToken } from '@/utils/cache/cookies'
 import { defineStore } from 'pinia'
 import { useSettingsStore } from './settings'
 import { useTagsViewStore } from './tags-view'
@@ -17,6 +17,7 @@ export const useUserStore = defineStore('user', () => {
   const login = async ({ username, password, captcha }: LoginRequestData) => {
     const { data } = await loginApi({ username, password, captcha })
     setCookie('userInfo', data)
+    setToken(data.token)
   }
 
   const register = async ({ alias, username, password, captcha }: RegisterRequestData) => {

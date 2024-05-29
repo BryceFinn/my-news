@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { getCaptchaApi } from '@/api/login'
-import { type RegisterRequestData } from '@/api/register/types/register'
+import { type RegisterFormData } from '@/api/register/types/register'
 import ThemeSwitch from '@/components/ThemeSwitch/index.vue'
 import { useUserStore } from '@/store/modules/user'
 import { Avatar, Key, Loading, Lock, Picture, User } from '@element-plus/icons-vue'
@@ -13,10 +13,11 @@ const router = useRouter()
 const { isFocus, handleBlur, handleFocus } = useFocus()
 
 const registerFormRef = ref<FormInstance | null>(null)
-const registerFormData: RegisterRequestData = reactive({
+const registerFormData: RegisterFormData = reactive({
   alias: '',
   username: '',
-  password: '',
+  password_input: '',
+  password_check: '',
   captcha: ''
 })
 const loading = ref(false)
@@ -29,32 +30,62 @@ const registerFormRules: FormRules = {
   ],
   username: [
     { required: true, message: '请输入邮箱', trigger: 'blur' },
-    { type: 'string', message: '邮箱格式错误', trigger: 'blur' }
+    { type: 'email', message: '邮箱格式错误', trigger: 'blur' }
   ],
-  password: [
+  password_input: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' }
+  ],
+  password_check: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' },
+    { validator: validatePassword, trigger: 'blur' }
   ],
   captcha: [{ required: true, message: '请输入验证码', trigger: 'blur' }]
 }
 
+function validatePassword(rule: any, value: string, callback: any) {
+  if (value !== registerFormData.password_input) {
+    callback(new Error('两次输入密码不一致!'))
+  } else {
+    callback()
+  }
+}
+
+const resetRegisterForm = () => {
+  registerFormRef.value?.resetFields()
+}
+
+const goToLogin = () => {
+  resetRegisterForm()
+  router.push({ path: '/login' })
+}
+
 const handleRegister = () => {
+  loading.value = true
   registerFormRef.value?.validate((valid: boolean, fields) => {
     if (valid) {
+      const registerRequestData = {
+        alias: registerFormData.alias,
+        username: registerFormData.username,
+        password: registerFormData.password_check,
+        captcha: registerFormData.captcha
+      }
       useUserStore()
-        .register(registerFormData)
+        .register(registerRequestData)
         .then(() => {
           router.push({ path: '/login' })
         })
         .catch(() => {
+          resetRegisterForm()
           createCode()
-          registerFormData.password = ''
         })
         .finally(() => {
           loading.value = false
         })
     } else {
       console.error('表单校验不通过', fields)
+      loading.value = false
     }
   })
 }
@@ -90,7 +121,7 @@ createCode()
           <el-form-item prop="alias">
             <el-input
               v-model.trim="registerFormData.alias"
-              placeholder="邮箱"
+              placeholder="昵称"
               type="text"
               tabindex="1"
               :prefix-icon="Avatar"
@@ -107,9 +138,22 @@ createCode()
               size="large"
             />
           </el-form-item>
-          <el-form-item prop="password">
+          <el-form-item prop="password_input">
             <el-input
-              v-model.trim="registerFormData.password"
+              v-model.trim="registerFormData.password_input"
+              placeholder="密码"
+              type="password"
+              tabindex="2"
+              :prefix-icon="Lock"
+              size="large"
+              show-password
+              @blur="handleBlur"
+              @focus="handleFocus"
+            />
+          </el-form-item>
+          <el-form-item prop="password_check">
+            <el-input
+              v-model.trim="registerFormData.password_check"
               placeholder="密码"
               type="password"
               tabindex="2"
@@ -146,9 +190,9 @@ createCode()
               </template>
             </el-input>
           </el-form-item>
-          <div class="button-container">
-            <el-button :loading="loading" type="danger" size="default">注 册</el-button>
-            <el-button :loading="loading" type="primary" size="default">登 录</el-button>
+          <div class="my-button-container">
+            <el-button :loading="loading" type="danger" size="default" @click="handleRegister">注 册</el-button>
+            <el-button :loading="loading" type="primary" size="default" @click="goToLogin">登 录</el-button>
           </div>
         </el-form>
       </div>
@@ -200,7 +244,7 @@ createCode()
           text-align: center;
         }
       }
-      .button-container {
+      .my-button-container {
         display: flex;
         justify-content: space-between;
         align-items: center; /* 垂直居中对齐 */
